@@ -12,8 +12,11 @@ public class SecurityConfig {
 
     private final AuthSuccessHandler successHandler;
 
-    public SecurityConfig(AuthSuccessHandler successHandler) {
+    private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
+
+    public SecurityConfig(AuthSuccessHandler successHandler, CustomOAuth2SuccessHandler customOAuth2SuccessHandler) {
         this.successHandler = successHandler;
+        this.customOAuth2SuccessHandler = customOAuth2SuccessHandler;
     }
 
     @Bean
@@ -21,11 +24,11 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/chat/**").authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/api/chat/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .successHandler(successHandler)
+                        .successHandler(customOAuth2SuccessHandler)
                 );
 
         return http.build();

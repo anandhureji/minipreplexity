@@ -1,7 +1,7 @@
 package com.minipreplexity.minipreplexity.security;
 
 import com.minipreplexity.minipreplexity.Repo.UserRepository;
-import com.minipreplexity.minipreplexity.model.Users;
+import com.minipreplexity.minipreplexity.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -22,10 +22,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         String email = oAuth2User.getAttribute("email");
-        Optional<Users> existingUser = userRepository.findByEmail(email);
+        Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isEmpty()) {
-            Users newUser = new Users();
+            User newUser = new User();
             newUser.setEmail(email);
             newUser.setName(oAuth2User.getAttribute("name"));
             newUser.setAvatarUrl(oAuth2User.getAttribute("picture"));

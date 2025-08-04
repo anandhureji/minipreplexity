@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import javax.persistence.*;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "users")
@@ -14,17 +16,13 @@ import java.security.Timestamp;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Users {
+public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String email;
 
     private String name;
-    private String email;
     private String avatarUrl;
     private String provider;
     private Timestamp createdAt;
-
-
 }
